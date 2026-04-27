@@ -15,8 +15,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      # ✅ FIXED: Proper CLI install
       - name: Install Databricks CLI
-        run: pip install databricks
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
+
+      # ✅ Optional but recommended (debug)
+      - name: Verify CLI
+        run: databricks --version
 
       - name: Set Databricks Auth
         run: |
