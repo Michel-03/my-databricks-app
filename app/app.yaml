@@ -1,5 +1,5 @@
-command: 
-  - "python"
-  - "app.py"
+command: ["python", "app.py"]
+
 env:
-  ENV: ${ENV}
+  - name: "ENV"
+    value: "dev"
