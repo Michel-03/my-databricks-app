@@ -12,30 +12,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-      - run: pip install databricks
+      - name: Install Databricks CLI
+        run: pip install databricks
 
-      - run: |
+      - name: Set Databricks Auth
+        run: |
           echo "DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}" >> $GITHUB_ENV
           echo "DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}" >> $GITHUB_ENV
 
-      - run: databricks configure --host $DATABRICKS_HOST --token $DATABRICKS_TOKEN
-
+      # DEV
       - name: Deploy DEV
         if: github.ref == 'refs/heads/dev'
         run: |
           databricks apps deploy my-app-dev \
-          --json '{"git_source": {"branch": "dev", "source_code_path": "app"}}'
+          --json '{"git_source": {"branch": "dev", "source_code_path": "app"}, "env": {"ENV": "dev"}}'
 
+      # QA
       - name: Deploy QA
         if: github.ref == 'refs/heads/qa'
         run: |
           databricks apps deploy my-app-qa \
-          --json '{"git_source": {"branch": "qa", "source_code_path": "app"}}'
+          --json '{"git_source": {"branch": "qa", "source_code_path": "app"}, "env": {"ENV": "qa"}}'
 
+      # PROD
       - name: Deploy PROD
         if: github.ref == 'refs/heads/main'
         run: |
           databricks apps deploy my-app-prod \
-          --json '{"git_source": {"branch": "main", "source_code_path": "app"}}'
+          --json '{"git_source": {"branch": "main", "source_code_path": "app"}, "env": {"ENV": "prod"}}'
