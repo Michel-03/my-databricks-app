@@ -1,5 +1,4 @@
 import os
 
 env = os.getenv("ENV", "dev")
-
-print(f"🚀 Running Databricks  to check in {env} environment")    
+print(f"🚀 Running Databricks App in {env} environment")
