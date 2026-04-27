@@ -1,4 +1,7 @@
 import os
+import streamlit as st
 
 env = os.getenv("ENV", "dev")
-print(f"🚀 Running Databricks App in {env} environment")
+
+st.title("Databricks App 🚀")
+st.write(f"Running in **{env}** environment")
