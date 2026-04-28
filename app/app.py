@@ -4,4 +4,4 @@ import streamlit as st
 env = os.getenv("ENV", "dev")
 
 st.title("Databricks App 🚀")
-st.write(f"Running in **{env}** environment triggerd by nagendra")
+st.write(f"Running in prod environment triggerd by nagendra")
